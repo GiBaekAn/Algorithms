@@ -1,0 +1,9 @@
+#include<iostream>#include<cmath>
+using namespace std;
+int check(int temp);
+int main() { int num; int temp; int result[1000] = { 0 };
+ scanf("%d", &num);
+ for (int i = 0; i < num; i++) {  scanf("%d", &temp);  if (check(temp)==1) { result[i] = 1;}  else { result[i] = 0; } }
+ for (int i = 0; i < num; i++) {  cout << result[i] << endl; }
+ return 0;}
+int check(int temp) { for (int a = 1; a < temp ; a++) {  for (int b = 1; b < temp ; b++) {   for (int c = 1; c < temp; c++) {    if (((a*(a + 1) / 2) + (b*(b + 1) / 2) + (c*(c + 1) / 2))==temp) {     return 1;    }   }  } }}
