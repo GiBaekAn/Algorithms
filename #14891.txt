@@ -1,0 +1,208 @@
+#include<iostream>
+using namespace std;
+
+void rotate(int temp[8]);
+void reverse(int temp[8]);
+
+int main() {
+
+	int first[8];
+	int second[8];
+	int third[8];
+	int fourth[8];
+	int rotate_num;
+	int what;
+	int wise;
+
+	for (int i = 0; i < 8; i++) {
+		scanf("%1d", &first[i]);
+	}
+	for (int j = 0; j < 8; j++) {
+		scanf("%1d", &second[j]);
+	}
+	for (int k = 0; k < 8; k++) {
+		scanf("%1d", &third[k]);
+	}
+	for (int l = 0; l < 8; l++) {
+		scanf("%1d", &fourth[l]);
+	}
+
+	scanf("%d", &rotate_num);
+
+	for (int w = 0; w < rotate_num; w++) {
+		scanf("%d", &what);
+		scanf("%d", &wise);
+
+		if (what == 1) {
+			if (wise == 1) {
+				if (first[2] == second[6]) {}
+				else {
+					if(second[2]==third[6]){}
+					else {
+						if(third[2]==fourth[6]){}
+						else {
+							reverse(fourth);
+						}
+						rotate(third);
+					}
+					reverse(second);
+				}
+				rotate(first);
+			}
+			else {
+				if (first[2] == second[6]) {}
+				else {
+					if (second[2] == third[6]) {}
+					else {
+						if (third[2] == fourth[6]) {}
+						else {
+							rotate(fourth);
+						}
+						reverse(third);
+					}
+					rotate(second);
+				}
+				reverse(first);
+			}
+		}
+
+
+		else if (what == 2) {
+			if (wise == 1) {
+				if(second[6]==first[2]){}
+				else {
+					reverse(first);
+				}
+				if(third[6]==second[2]){}
+				else {
+					if(fourth[6]==third[2]){
+					}
+					else {
+						rotate(fourth);
+					}
+					reverse(third);
+				}
+				rotate(second);
+			}
+			else {
+				if (second[6] == first[2]) {}
+				else {
+					rotate(first);
+				}
+				if (third[6] == second[2]) {}
+				else {
+					if (fourth[6] == third[2]) {
+					}
+					else {
+						reverse(fourth);
+					}
+					rotate(third);
+				}
+				reverse(second);
+			}
+		}
+
+
+		else if (what == 3) {
+			if (wise == 1) {
+				if (fourth[6] == third[2]) {}
+				else {
+					reverse(fourth);
+				}
+				if (third[6] == second[2]) {}
+				else {
+					if (second[6] == first[2]) {
+					}
+					else {
+						rotate(first);
+					}
+					reverse(second);
+				}
+				rotate(third);
+			}
+			else {
+				if (fourth[6] == third[2]) {}
+				else {
+					rotate(fourth);
+				}
+				if (third[6] == second[2]) {}
+				else {
+					if (second[6] == first[2]) {
+					}
+					else {
+						reverse(first);
+					}
+					rotate(second);
+				}
+				reverse(third);
+			}
+		}
+
+
+		else if (what == 4) {
+			if (wise == 1) {
+				if (third[2] == fourth[6]) {}
+				else {
+					if (second[2] == third[6]) {}
+					else {
+						if (first[2] == second[6]) {}
+						else {
+							reverse(first);
+						}
+						rotate(second);
+					}
+					reverse(third);
+				}
+				rotate(fourth);
+			}
+			else {
+				if (third[2] == fourth[6]) {}
+				else {
+					if (second[2] == third[6]) {}
+					else {
+						if (first[2] == second[6]) {}
+						else {
+							rotate(first);
+						}
+						reverse(second);
+					}
+					rotate(third);
+				}
+				reverse(fourth);
+			}
+		}
+
+
+		else {}
+
+	}
+
+	int result = 0;
+
+	if (first[0] == 1) { result += 1; }
+	if (second[0] == 1) { result += 2; }
+	if (third[0] == 1) { result += 4; }
+	if (fourth[0] == 1) { result += 8; }
+
+	printf("%d", result);
+
+}
+
+
+void rotate(int temp[8]) {
+	int a;
+	a = temp[7];
+	for (int i = 7; i > 0; i--) {
+		temp[i] = temp[i - 1];
+	}
+	temp[0] = a;
+}
+
+void reverse(int temp[8]) {
+	int a;
+	a = temp[0];
+	for (int i = 0; i < 7; i++) {
+		temp[i] = temp[i + 1];
+	}
+	temp[7] = a;
+}
