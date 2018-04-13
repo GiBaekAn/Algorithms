@@ -1,0 +1,132 @@
+
+#include<iostream>
+#include<queue>
+#include<algorithm>
+using namespace std;
+
+int map[102][102];
+int num, apple, a, b, length = 1 , change;
+int see = 800, sero = 1, garo = 1;
+int second = -1;
+int when[102];
+char dorl[102];
+
+queue<int> serobody;
+queue<int> garobody;
+queue<int> serocheck;
+queue<int> garocheck;
+
+void check();
+void go();
+
+int main() {
+	scanf_s("%d", &num);
+	for (int k = 0; k < num + 2; k++) {
+		for (int j = 0; j < num + 2; j++) {
+			if (j == 0 || k == 0 || j == num + 1 || k == num + 1) {
+				map[j][k] = 1;
+			}
+		}
+	}
+
+	scanf_s("%d", &apple);
+	for (int i = 0; i < apple; i++) {
+		scanf_s("%d", &a);
+		scanf_s("%d", &b);
+		map[a][b] = -1;
+	}
+
+	scanf_s("%d", &change);
+	for (int l = 0; l < change; l++) {
+		scanf_s("%d", &when[l]);
+		cin >> dorl[l];
+	}
+
+	serobody.push(sero);
+	garobody.push(garo);
+
+	int count = 0;
+
+	while (map[sero][garo] < 1 ) {
+		second++;
+		//printf("%d 초 일때 위치는 %d %d\n",second, sero, garo);
+
+		if(when[count]==second){
+			count++;
+			if(dorl[count-1]=='L'){
+				see--;
+			}
+			else if (dorl[count-1] == 'D') {
+				see++;
+			}
+			//printf("%d 초일때 %c 쪽으로 방향 전환, see = %d\n", when[count-1], dorl[count-1],see%4);
+		}
+
+		if (map[sero][garo] == -1) {
+			map[sero][garo] = 0;
+			length++;
+			//printf("사과를 먹었습니다 몸 길이 : %d\n", length);
+
+		}
+		check();
+		go();
+	}
+	//printf("%d %d 에서 생을 마감\n", sero, garo);
+	printf("답은 %d\n", second + 1);
+
+	
+
+	int test;
+	scanf_s("%d", &test);
+	
+}
+
+void check() {
+	
+	serocheck = serobody;
+	garocheck = garobody;
+	
+	while (!(serocheck.empty() && garocheck.empty())) {
+		//printf("%d %d\n",serocheck.front(),garocheck.front());
+		map[serocheck.front()][garocheck.front()] = 1;
+		serocheck.pop();
+		garocheck.pop();
+	}
+	
+}
+
+void go() {
+	if (serobody.front() == sero&&garobody.front() == garo) {
+		length++;
+	}
+	if (serobody.size() == length) {
+		map[serobody.front()][garobody.front()] = 0;
+		serobody.pop();
+		garobody.pop();
+	}
+	if (see %4 == 0) {
+		garo++;
+	}
+	else if (see%4 == 1) {
+		sero++;
+	}
+	else if (see%4 == 2) {
+		garo--;
+	}
+	else if (see%4 == 3) {
+		sero--;
+	}
+	serobody.push(sero);
+	garobody.push(garo);
+}
+
+
+/* map 출력확인
+
+for (int t = 0; t < num + 2; t++) {
+for (int tt = 0; tt < num + 2; tt++) {
+printf("%d", map[t][tt]);
+}
+printf("\n");
+}
+*/
