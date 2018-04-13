@@ -1,0 +1,125 @@
+
+#include<iostream>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+int sero, garo;
+int map[10][10];
+int forcheck[10][10];
+//int a, b, c;
+int maxi = 0;
+
+
+//void dfs(int a_sero, int a_garo, int b_sero, int b_garo, int c_sero, int c_garo);
+void dfs(int a, int b, int c);
+void contaminate();
+int check_zero();
+
+int main() {
+	
+	scanf_s("%d", &sero);
+	scanf_s("%d", &garo);
+	for (int k = 1; k < sero+1 ; k++) {
+		for (int j = 1; j < garo+1 ; j++) {
+			scanf_s("%d", &map[k][j]);
+		}
+	}
+	int all = sero * garo;
+	
+	for (int i = 1; i < all +1 ; i++) {
+		for (int j = 1; j < all+1; j++) {
+			for (int k = 1; k < all+1; k++) {
+				if ((k != j) && (j != i) && (i != k)) {
+					dfs(i, j, k);
+				}
+			}
+		}
+	}
+
+	printf("%d", maxi);
+	int kk;
+	scanf_s("%d", &kk);
+}
+
+void dfs(int a, int b, int c) {
+	int a_sero, a_garo, b_sero, b_garo, c_sero, c_garo;
+	int cnt=0;
+	for (int t = 1; t < sero + 1; t++) {
+		for (int tt = 1; tt < garo + 1; tt++) {
+			forcheck[t][tt] = map[t][tt];
+		}
+	}
+
+	a_sero = ((a - 1) / garo) + 1;
+	a_garo = (a % garo);
+	if (a_garo == 0) { a_garo = garo; }
+	if (forcheck[a_sero][a_garo] == 0) {
+		forcheck[a_sero][a_garo] = 1;
+		cnt++;
+	}
+
+	b_sero = ((b - 1) / garo) + 1;
+	b_garo = (b % garo);
+	if (b_garo == 0) { b_garo = garo; }
+	if (forcheck[b_sero][b_garo] == 0) {
+		forcheck[b_sero][b_garo] = 1;
+		cnt++;
+	}
+
+	c_sero = ((c - 1) / garo) + 1;
+	c_garo = (c % garo);
+	if (c_garo == 0) { c_garo = garo; }
+	if (forcheck[c_sero][c_garo] == 0) {
+		forcheck[c_sero][c_garo] = 1;
+		cnt++;
+	}
+	if(cnt==3){
+		contaminate();
+		if (maxi < check_zero()) {
+			printf("%d %d, %d %d, %d %d\n", a_sero, a_garo, b_sero, b_garo, c_sero, c_garo);
+			printf("%d %d %d \n", a, b, c);
+			for (int t = 1; t < sero + 1; t++) {
+				for (int tt = 1; tt < garo + 1; tt++) {
+					printf("%d", forcheck[t][tt]);
+				}
+				printf("\n");
+			}
+		}
+		maxi = max(maxi, check_zero());
+	}
+	
+}
+
+void contaminate() {
+	for(int p =0;p<sero+garo;p++){
+		for (int k = 1; k < sero + 1; k++) {
+			for (int j = 1; j < garo + 1; j++) {
+				if (forcheck[k][j] == 2) {
+					if (forcheck[k - 1][j] == 0) {
+						forcheck[k - 1][j] = 2;
+					}
+					if (forcheck[k][j - 1] == 0) {
+						forcheck[k][j - 1] = 2;
+					}
+					if (forcheck[k + 1][j] == 0) {
+						forcheck[k + 1][j] = 2;
+					}
+					if (forcheck[k][j + 1] == 0) {
+						forcheck[k][j + 1] = 2;
+					}
+				}
+			}
+
+		}
+	}
+}
+
+int check_zero() {
+	int count = 0;
+	for (int k = 1; k < sero+1; k++) {
+		for (int j = 1; j < garo+1; j++) {
+			if (forcheck[k][j] == 0) { count++; }
+		}
+	}
+	return count;
+}
