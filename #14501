@@ -1,0 +1,44 @@
+
+#include<iostream>
+#include<queue>
+#include <cmath>
+#include<algorithm>
+using namespace std;
+
+int num;
+int len[100];
+int money[100];
+int result;
+int maxi = 0;
+
+void dfs(int depth, int sum);
+
+int main() {
+
+	scanf_s("%d", &num);
+	for (int i = 1; i < num + 1; i++) {
+		scanf_s("%d", &len[i]);
+		scanf_s("%d", &money[i]);
+	}
+	printf("input 입력 끝\n");
+
+	dfs(1, 0);
+
+	printf("%d", maxi);
+
+	int ss;
+	scanf_s("%d", &ss);
+}
+
+void dfs(int depth,int sum) {
+	if (depth == num + 1) {
+		maxi = max(maxi, sum);
+		return;
+	}
+	if (depth + 1 <= num + 1) {
+		dfs(depth + 1, sum);
+	}
+	if (depth + len[depth] <= num + 1) {
+		dfs(depth + len[depth], sum + money[depth]);
+	}
+}
