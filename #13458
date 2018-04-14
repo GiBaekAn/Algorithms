@@ -1,0 +1,38 @@
+#include<iostream>
+
+using namespace std;
+int num;
+int student[100001];
+int watch1, watch2;
+long long result;
+
+
+int main() {
+
+	scanf_s("%d", &num);
+	for (int i = 0; i < num; i++) {
+		scanf_s("%d", &student[i]);
+	}
+
+	scanf_s("%d", &watch1);
+	scanf_s("%d", &watch2);
+
+	for (int k = 0; k < num; k++) {
+		student[k] = student[k] - watch1;
+		result++;
+
+		if (student[k] > 0) {
+			if (student[k] % watch2 == 0) {
+				result = result + (student[k] / watch2);
+			}
+			else {
+				result = result + 1 + (student[k] / watch2);
+			}
+		}
+
+	}
+	cout << result;
+
+	int tee;
+	scanf_s("%d", &tee);
+}
